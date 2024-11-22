@@ -1,0 +1,49 @@
+plugins {
+    id "com.microsoft.azure.azurefunctions" version "1.12.0"
+}
+apply plugin: "java"
+
+group 'com.epam.demo.survey'
+version '1.0.0-SNAPSHOT'
+
+dependencies {
+    implementation 'com.microsoft.azure.functions:azure-functions-java-library:3.1.0'
+    implementation 'com.azure:azure-ai-documentintelligence:1.0.0-beta.4'
+    implementation 'com.azure:azure-storage-queue:12.24.0'
+    implementation 'com.azure:azure-identity:1.14.2'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.18.1'
+    testImplementation 'org.mockito:mockito-core:2.23.4'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.4.2'
+}
+
+sourceCompatibility = '21'
+targetCompatibility = '21'
+
+repositories {
+    mavenCentral()
+    maven { url 'https://azure.oss.sonatype.org/content/repositories/snapshots/' } // For accessing beta versions
+}
+
+compileJava {
+    sourceCompatibility = 21
+    targetCompatibility = 21
+}
+
+azurefunctions {
+    subscription = project.property('subscription')
+    resourceGroup = project.property('resourceGroup')
+    appName = project.property('appName')
+    pricingTier = project.property('pricingTier')
+    region = project.property('region')
+    runtime {
+      os = 'linux'
+    }
+    auth {
+        type = 'azure_cli'
+    }
+
+    // appSettings {
+    //    key = 'value'
+    // }
+    localDebug = "transport=dt_socket,server=y,suspend=n,address=5005"
+}
