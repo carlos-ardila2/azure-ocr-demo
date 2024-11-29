@@ -1,4 +1,3 @@
-```markdown
 # Survey Application
 
 ## Purpose
